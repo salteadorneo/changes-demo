@@ -1,0 +1,69 @@
+# Changes Monitor Configuration Example
+
+# Page title shown in dashboard
+title: Change Monitor Example
+
+# UI Language: 'en' (English) or 'es' (Spanish)
+language: en
+
+# Screenshot archive retention (optional)
+#
+# Captures happen when the content changes, plus one per day as a heartbeat.
+# Old ones are pruned with these rules. A full-page PNG weighs ~1-1.5 MB, so
+# maxTotal is your storage budget per source: 40 ~ 40-60 MB.
+archive:
+  keepRecent: 24   # newest screenshots, whatever their age
+  keepDaily: 30    # one per day for the last N days
+  maxTotal: 40     # hard cap per source
+
+# List of sources to monitor
+sources:
+  # Example 1: Monitoring a JSON API
+  - name: Example API Version
+    url: https://api.github.com/repos/octocat/Hello-World
+    type: json
+    # Use dot notation to access nested values
+    # This will extract the "id" field from the response
+    jsonPath: id
+    # Optional: custom timeout in milliseconds (default 10000)
+    timeout: 10000
+
+  # Example 2: Monitoring HTML content with CSS selector
+  - name: Example Website Version
+    url: https://github.com
+    type: html
+    # Extract text from an HTML element
+    # Supports: .class-name, #element-id, [data-attr], tag names
+    selector: "meta[name='description']"
+    timeout: 10000
+
+  # Example 3: Monitoring plain text content
+  - name: Example Text File
+    url: https://raw.githubusercontent.com/octocat/Hello-World/master/README.md
+    type: content
+    timeout: 10000
+  # Cookie banners are dismissed before the capture (rejecting is preferred).
+  # Set to false to photograph the banner as-is.
+  # consent: false
+  # Same for screenshots entirely:
+  # screenshots: false
+
+# Optional: report/feedback link
+# report: https://github.com/username/repo/issues/new
+
+# How it works:
+#
+# 1. Each source is fetched based on its configuration
+# 2. Content is extracted according to the type:
+#    - content: Full text is used
+#    - html: Element content is extracted via selector
+#    - json: Value at jsonPath is extracted
+# 3. Content is hashed using SHA256
+# 4. If hash differs from previous check, status = "changed"
+# 5. Dashboard and JSON API files are generated
+#
+# Tips:
+# - Use 'npm run build' to manually trigger a check
+# - Use 'npm run dev' for watch mode during development
+# - Check 'index.html' for the generated dashboard
+# - Check 'api/{source-id}/status.json' for programmatic access

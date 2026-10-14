@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Changes — Changes detector for GitHub Pages</title>
+  <meta name="description" content="Template that detects web page changes, captures before/after screenshots and posts a GitHub Issue per change. Static page, no server required.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://changes.salteadorneo.dev/">
+  <link rel="alternate" hreflang="es" href="https://changes.salteadorneo.dev/es/">
+  <link rel="alternate" hreflang="en" href="https://changes.salteadorneo.dev/en/">
+  <link rel="alternate" hreflang="x-default" href="https://changes.salteadorneo.dev/">
+  <meta http-equiv="refresh" content="0; url=en/">
+  <script>
+    (function () {
+      try {
+        var lang = (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
+        lang = String(lang).toLowerCase();
+        var target = lang.indexOf('es') === 0 ? 'es/' : 'en/';
+        // Respect a stored preference if present
+        var saved = localStorage.getItem('changes-lang');
+        if (saved === 'es' || saved === 'en') target = saved + '/';
+        window.location.replace(target);
+      } catch (e) {
+        window.location.replace('en/');
+      }
+    })();
+  </script>
+  <noscript><meta http-equiv="refresh" content="0; url=en/"></noscript>
+</head>
+<body class="bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 antialiased p-6">
+  <main class="max-w-2xl mx-auto py-20">
+    <h1 class="text-2xl font-semibold tracking-tight">Changes</h1>
+    <p class="mt-3 text-zinc-600 dark:text-zinc-400">Choose your language.</p>
+    <ul class="mt-6 space-y-2">
+      <li><a href="es/" hreflang="es" class="text-zinc-900 dark:text-zinc-100 underline">Español</a></li>
+      <li><a href="en/" hreflang="en" class="text-zinc-900 dark:text-zinc-100 underline">English</a></li>
+    </ul>
+  </main>
+</body>
+</html>
